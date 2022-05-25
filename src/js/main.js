@@ -13,6 +13,7 @@ class Sky {
       isClosed: false,
       width: null,
     };
+    this.lastUpdate = 0;
   }
 
   initCanvas() {
@@ -50,7 +51,7 @@ class Sky {
 
   updateStars() {
     this.stars.forEach((star) => {
-      star.x += star.speed;
+      star.x += star.speed * this.delta / 16;
       star.y -= (star.speed * (this.width / 2 - star.x)) / 2500;
       star.radius = star.originalRadius + (Math.random() - 0.5);
 
@@ -83,7 +84,7 @@ class Sky {
 
   updateConstellation() {
     if (this.constellation.width > 0) {
-      this.constellation.width -= 0.04;
+      this.constellation.width -= 0.04 * this.delta / 16;
     } else this.constellation.width = 0;
   }
 
@@ -157,6 +158,8 @@ class Sky {
   }
 
   draw(now) {
+    this.delta = now - this.lastUpdate;
+    console.log(this.delta);
     this.clearCanvas();
 
     this.drawStars();
@@ -172,6 +175,8 @@ class Sky {
       this.genereteRandomConstellation();
     }
 
+    this.lastUpdate = now;
+
     window.requestAnimationFrame((now) => this.draw(now));
   }
 
@@ -180,7 +185,7 @@ class Sky {
     this.generateStars(500);
     this.genereteRandomConstellation();
 
-    this.draw();
+    this.draw(0);
   }
 }
 
