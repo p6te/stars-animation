@@ -16,6 +16,46 @@ class Sky {
     this.ctx.fillRect(0, 0, this.width, this.height);
   }
 
+  generateStars(count) {
+    let stars = [];
+
+    for (let i = 0; i < count; i++) {
+      const radius = Math.random() * 3 + 2;
+
+      stars.push({
+        x: Math.random() * this.width,
+        y: Math.random() * this.height,
+        radius: radius,
+        color: "#fff",
+        speed: Math.random() + 0.3,
+      });
+    }
+
+    this.stars = stars;
+  }
+
+  drawStars() {
+    this.stars.forEach((star) => {
+      this.drawStar(star);
+    });
+  }
+
+  updateStars() {
+    this.stars.forEach((star) => {
+      star.x += star.speed;
+      star.y -= (star.speed * ((this.width / 2 )- star.x)) / 1000;
+
+      if (star.x > this.width + 2 * star.radius) {
+        star.x = -2 * star.radius;
+      }
+    });
+  }
+
+  clearCanvas() {
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(0, 0, this.width, this.height);
+  }
+
   drawStar(star) {
     this.ctx.save();
 
@@ -38,14 +78,16 @@ class Sky {
   }
 
   draw() {
-    console.log("draw");
+    this.clearCanvas();
+    this.drawStars();
+    this.updateStars();
     window.requestAnimationFrame(() => this.draw());
   }
 
   run() {
     this.initCanvas();
-    // this.draw();
-
+    this.generateStars(200);
+    this.draw();
   }
 }
 
