@@ -51,7 +51,7 @@ class Sky {
 
   updateStars() {
     this.stars.forEach((star) => {
-      star.x += star.speed * this.delta / 16;
+      star.x += (star.speed * this.delta) / 16;
       star.y -= (star.speed * (this.width / 2 - star.x)) / 2500;
       star.radius = star.originalRadius + (Math.random() - 0.5);
 
@@ -84,7 +84,7 @@ class Sky {
 
   updateConstellation() {
     if (this.constellation.width > 0) {
-      this.constellation.width -= 0.04 * this.delta / 16;
+      this.constellation.width -= (0.04 * this.delta) / 16;
     } else this.constellation.width = 0;
   }
 
@@ -159,7 +159,7 @@ class Sky {
 
   draw(now) {
     this.delta = now - this.lastUpdate;
-    console.log(this.delta);
+
     this.clearCanvas();
 
     this.drawStars();
