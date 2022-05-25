@@ -6,7 +6,7 @@ const BundleAnalyzerPlugin =
 module.exports = {
   mode: 'development',
   entry: {
-    bundle: path.resolve(__dirname, 'src/index.js'),
+    bundle: path.resolve(__dirname, 'src/js/main.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -49,7 +49,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Webpack App',
+      title: 'Stars animation',
       filename: 'index.html',
       template: 'src/template.html',
     }),
